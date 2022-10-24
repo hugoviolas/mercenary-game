@@ -6,6 +6,8 @@ const hardcore = document.getElementById("hardcore");
 const button = document.querySelectorAll("button");
 const homepage = document.querySelector(".homepage");
 
+// Faire 1 seul eventListener, un switchCase avec les différents modes en fonction du textContent du bouton
+
 easy.addEventListener("click", () => {
   button.forEach((button) => {
     button.classList.toggle("hide");
@@ -16,9 +18,9 @@ easy.addEventListener("click", () => {
   const game = new Game();
   function animate() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+    game.frame = requestAnimationFrame(animate);
     game.update();
     game.draw();
-    game.frame = requestAnimationFrame(animate);
   }
   animate();
 });
@@ -32,9 +34,9 @@ normal.addEventListener("click", () => {
   const game = new Game();
   function animate() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+    requestAnimationFrame(animate);
     game.update();
     game.draw();
-    requestAnimationFrame(animate);
   }
   animate();
 });
@@ -48,9 +50,9 @@ hardcore.addEventListener("click", () => {
   const game = new Game();
   function animate() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+    requestAnimationFrame(animate);
     game.update();
     game.draw();
-    requestAnimationFrame(animate);
   }
   animate();
 });

@@ -13,6 +13,14 @@ class UI {
     this.ctx.fillText("Bienvenue", 20, 40);
     this.ctx.fillText(`Lives : ${player.lives}`, 40, 100);
   }
+  nextWave(waveNumber, timer) {
+    this.ctx.fillText(
+      `Be ready for wave ${waveNumber} !`,
+      this.canvas.width / 2 - 200,
+      this.canvas.height / 2 - 50
+    );
+    //this.ctx.fillText(`Next wave starts in ${timer}`, 200, 200);
+  }
 }
 
 export default UI;

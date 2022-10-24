@@ -10,15 +10,15 @@ class Enemy {
     this.game = game;
     this.ctx = ctx;
     this.lives = 1;
-    this.x = this.canvas.width;
-    this.y = Math.floor(Math.random() * this.canvas.height) - 60;
-    this.speedX = -0.6;
+    this.x = this.canvas.width + Math.random() * 300;
+    this.y = Math.floor(Math.random() * this.canvas.height);
+    this.speedX = -1;
     this.width = 64;
     this.height = 2000 / 30;
     this.ismoving = true;
     this.arrows = [];
     this.markedForDeletion = false;
-    this.numOfArrows = 2;
+    this.numOfArrows = 5;
     this.image = document.getElementById("enemy");
     this.frameX = 1;
     this.frameY = 1;
@@ -45,22 +45,15 @@ class Enemy {
       arrow.move();
     });
   }
-  attack(player) {
+  attack() {
     if (!this.numOfArrows || this.game.frame % 99) {
       return;
     }
     setTimeout(() => {
-      this.stopMove();
+      //this.stopMove();
       this.arrows.push(new Arrow(this.canvas, this.ctx, this.x, this.y));
-    }, Math.ceil(Math.random() * 3000) + 1000);
+    }, Math.ceil(Math.random() * 8000) + 1000);
     this.numOfArrows--;
-    this.arrows.forEach((arrow) => {
-      if (arrow.checkCollision(arrow, player)) {
-        player.life -= 1;
-        arrow.markedForDeletion = true;
-      }
-    });
-    this.arrows = this.arrows.filter((arrow) => !arrow.markedForDeletion);
   }
   isOutOfBound(player) {
     if (this.x < 0 - this.width) {
@@ -88,7 +81,6 @@ class Enemy {
   topEdge() {
     return this.y;
   }
-
 }
 
 export default Enemy;

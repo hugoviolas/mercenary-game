@@ -43,14 +43,12 @@ class Player {
     window.addEventListener("keydown", (event) => {
       if (event.code === "Space") {
         this.attack();
-        console.log(this.attackMode);
       }
     });
     window.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
         this.hitboxWidth = this.width;
         this.attackMode = false;
-        console.log(this.attackMode);
       }
     });
   }

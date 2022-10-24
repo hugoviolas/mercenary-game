@@ -12,11 +12,14 @@ class Game {
     this.canvas = null;
     this.ctx = null;
     this.init();
-    this.player = new Player(this.canvas, this.ctx, 19);
+    this.player = new Player(this.canvas, this.ctx, 10);
     this.input = new InputHandler(this.player);
     this.ui = new UI(this.canvas, this.ctx);
     this.frame = 0;
     this.enemies = [];
+    this.waves = [5, 10, 15];
+    this.waveNumber = 0;
+    this.finishedWave = false;
   }
   init() {
     this.canvas = document.getElementById("canvas");
@@ -26,8 +29,17 @@ class Game {
   }
   // Runed on every animation frame
   update() {
+    console.log(this.frame);
     this.player.update(this.input.keys);
-    this.randomEnemySpawn();
+    if (!this.enemies.length) {
+      this.ui.nextWave(this.waveNumber + 1);
+      if (this.waveNumber === 4) {
+        alert("you won");
+        cancelAnimationFrame(this.frame);
+        return;
+      }
+      this.waveGenerator();
+    }
     this.enemies.forEach((enemy) => {
       enemy.move();
       if (
@@ -44,10 +56,21 @@ class Game {
       //     this.player.lives -= 1;
       //     console.log(this.player.lives);
       //   }
-      enemy.attack(this.player);
+      enemy.attack();
+      enemy.arrows.forEach((arrow) => {
+        if (arrow.checkCollision(this.player)) {
+          this.player.lives -= 1;
+          arrow.markedForDeletion = true;
+        }
+      });
+      enemy.arrows = enemy.arrows.filter((arrow) => !arrow.markedForDeletion);
       enemy.isOutOfBound(this.player);
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
+    if (this.player.lives === 0) {
+      cancelAnimationFrame(this.frame);
+      alert("Game Over");
+    }
   }
   // Draw all images
   draw() {
@@ -57,12 +80,26 @@ class Game {
     });
     this.ui.draw(this.player);
   }
-  randomEnemySpawn() {
-    if (Math.random() > 0.991) {
-      this.enemies.push(new Enemy(this.canvas, this.ctx, this));
-      console.log(this.enemies);
+  // Première version du générateur d'enemis, tourne en continue
+  //   randomEnemySpawn(number) {
+  //     for (let i = 0; i < number; i++) {
+  //       if (Math.random() > 0.991) {
+  //         this.enemies.push(new Enemy(this.canvas, this.ctx, this));
+  //         console.log(this.enemies);
+  //       }
+  //     }
+  //   }
+  waveGenerator() {
+    console.log("<<<<<<<<<<<<<<<<<");
+    if (this.frame % 99) {
+      return;
     }
+    for (let i = 0; i < this.waves[this.waveNumber]; i++) {
+      this.enemies.push(new Enemy(this.canvas, this.ctx, this));
+    }
+    this.waveNumber += 1;
   }
+
   checkCollision(enemy, player) {
     const isInX =
       enemy.rightEdge() >= player.leftEdge() &&

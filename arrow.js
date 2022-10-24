@@ -51,13 +51,13 @@ class Arrow {
   topEdge() {
     return this.y;
   }
-  checkCollision(this, player) {
+  checkCollision(player) {
     const isInX =
-      enemy.rightEdge() >= player.leftEdge() &&
-      enemy.leftEdge() <= player.rightEdge();
+      this.rightEdge() >= player.leftEdge() &&
+      this.leftEdge() <= player.rightEdge();
     const isInY =
-      enemy.topEdge() <= player.bottomEdge() &&
-      enemy.bottomEdge() >= player.topEdge();
+      this.topEdge() <= player.bottomEdge() &&
+      this.bottomEdge() >= player.topEdge();
     return isInX && isInY;
   }
 }
