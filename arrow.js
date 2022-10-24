@@ -4,10 +4,10 @@ class Arrow {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
-    this.width = 64;
-    this.height = 2000 / 30;
-    this.hitboxWidth = 25;
-    this.hitboxHeight = 20;
+    this.width = 64 * 2;
+    this.height = (2000 / 30) * 2;
+    this.hitboxWidth = 50;
+    this.hitboxHeight = 40;
     this.speedX = -3;
     this.image = document.getElementById("enemy");
     this.frameX = 8.5;
@@ -33,7 +33,7 @@ class Arrow {
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
     this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x + 20, this.y + 20, width, height);
+    this.ctx.strokeRect(this.x + 40, this.y + 40, width, height);
   }
   move() {
     this.x += this.speedX;

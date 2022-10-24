@@ -16,10 +16,14 @@ class Game {
     this.input = new InputHandler(this.player);
     this.ui = new UI(this.canvas, this.ctx);
     this.frame = 0;
+    this.time = null;
     this.enemies = [];
-    this.waves = [5, 10, 15];
+    this.waves = [3, 7, 10];
     this.waveNumber = 0;
     this.finishedWave = false;
+    this.gameover = false;
+    this.gameTime = 0;
+    this.counter = 0;
   }
   init() {
     this.canvas = document.getElementById("canvas");
@@ -29,18 +33,24 @@ class Game {
   }
   // Runed on every animation frame
   update() {
-    console.log(this.frame);
     this.player.update(this.input.keys);
     if (!this.enemies.length) {
-      this.ui.nextWave(this.waveNumber + 1);
+      while (this.counter < 5000 && !this.gameover) {
+        this.ui.nextWave(this.waveNumber + 1);
+        this.counter++;
+      }
       if (this.waveNumber === 4) {
+        this.gameover = true;
         alert("you won");
         cancelAnimationFrame(this.frame);
         return;
       }
+
       this.waveGenerator();
+      this.counter = 0;
     }
     this.enemies.forEach((enemy) => {
+      enemy.update();
       enemy.move();
       if (
         this.checkCollision(enemy, this.player) &&
@@ -57,6 +67,7 @@ class Game {
       //     console.log(this.player.lives);
       //   }
       enemy.attack();
+
       enemy.arrows.forEach((arrow) => {
         if (arrow.checkCollision(this.player)) {
           this.player.lives -= 1;
@@ -68,8 +79,9 @@ class Game {
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     if (this.player.lives === 0) {
-      cancelAnimationFrame(this.frame);
       alert("Game Over");
+      cancelAnimationFrame(this.frame);
+      return;
     }
   }
   // Draw all images

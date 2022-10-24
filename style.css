@@ -11,7 +11,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: green;
+  /* background: green; */
+  background-image: url("./background/Battleground1.png");
+  background-size: cover;
   max-width: 70%;
   max-height: 70%;
 }
@@ -34,6 +36,7 @@
   border-radius: 10px;
   margin: 0 auto;
   background-image: url("./background/castle-background.jpg");
+  /* background-image: url("./background/Battleground2.png"); */
   background-size: cover;
 }
 .homepage div {
@@ -57,5 +60,10 @@ button {
 }
 
 button:hover {
-  font-size: 1.3vw;
+  font-size: 2vw;
+}
+
+#hardcore {
+  font-family: "Nosifer", cursive;
+  color: red;
 }

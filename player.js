@@ -7,11 +7,11 @@ class Player {
     this.y = this.canvas.height / 2;
     this.frameX = 0;
     this.frameY = 8.6;
-    this.width = 64;
-    this.height = 2000 / 30;
-    this.hitboxWidth = this.width;
-    this.hitboxHeight = this.height;
-    this.attackWidth = 90;
+    this.width = 128;
+    this.height = (2000 / 30) * 2;
+    this.hitboxWidth = this.width - 70;
+    this.hitboxHeight = this.height - 70;
+    this.attackWidth = 70;
     this.speedX = 4;
     this.speedY = 4;
     this.attackMode = false;
@@ -31,12 +31,12 @@ class Player {
       this.x -= this.speedX;
     } else if (
       (input.includes("ArrowUp") || input.includes("KeyW")) &&
-      this.y > 0
+      this.y > this.canvas.height / 2 - this.height + 15
     ) {
       this.y -= this.speedY;
     } else if (
       (input.includes("ArrowDown") || input.includes("KeyS")) &&
-      this.y < this.canvas.height - this.height
+      this.y < this.canvas.height - this.height / 1.5
     ) {
       this.y += this.speedY;
     }
@@ -47,7 +47,7 @@ class Player {
     });
     window.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
-        this.hitboxWidth = this.width;
+        this.hitboxWidth = this.width - 70;
         this.attackMode = false;
       }
     });
@@ -73,14 +73,14 @@ class Player {
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
     this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x, this.y, width, height);
+    this.ctx.strokeRect(this.x + 40, this.y + 40, width, height);
   }
   // Attack method makes the hitbox grow bigger as the player uses his sword
   attack() {
     this.hitboxWidth = this.attackWidth;
     this.attackMode = true;
   }
-  checkCollision() {}
+
   bottomEdge() {
     return this.y + this.hitboxHeight;
   }
