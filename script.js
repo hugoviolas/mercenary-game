@@ -18,7 +18,7 @@ easy.addEventListener("click", () => {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
     game.update();
     game.draw();
-    requestAnimationFrame(animate);
+    game.frame = requestAnimationFrame(animate);
   }
   animate();
 });

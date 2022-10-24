@@ -15,7 +15,7 @@ class Game {
     this.player = new Player(this.canvas, this.ctx, 19);
     this.input = new InputHandler(this.player);
     this.ui = new UI(this.canvas, this.ctx);
-    this.frames = 0;
+    this.frame = 0;
     this.enemies = [];
   }
   init() {
@@ -36,8 +36,18 @@ class Game {
       ) {
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
       }
-      enemy.attack();
+      // Le joueur perd une vie si touché par enemy PAS SUR DE GARDER CETTE FONCTION
+      //   } else if (
+      //     this.checkCollision(enemy, this.player) &&
+      //     this.player.attackMode === false
+      //   ) {
+      //     this.player.lives -= 1;
+      //     console.log(this.player.lives);
+      //   }
+      enemy.attack(this.player);
+      enemy.isOutOfBound(this.player);
     });
+    this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
   }
   // Draw all images
   draw() {
@@ -45,7 +55,22 @@ class Game {
     this.enemies.forEach((enemy) => {
       enemy.draw();
     });
-    this.ui.draw();
+    this.ui.draw(this.player);
+  }
+  randomEnemySpawn() {
+    if (Math.random() > 0.991) {
+      this.enemies.push(new Enemy(this.canvas, this.ctx, this));
+      console.log(this.enemies);
+    }
+  }
+  checkCollision(enemy, player) {
+    const isInX =
+      enemy.rightEdge() >= player.leftEdge() &&
+      enemy.leftEdge() <= player.rightEdge();
+    const isInY =
+      enemy.topEdge() <= player.bottomEdge() &&
+      enemy.bottomEdge() >= player.topEdge();
+    return isInX && isInY;
   }
   //   startGame() {
   //     console.log("Game Started");
@@ -105,20 +130,5 @@ class Game {
   //       }
   //     });
   //   }
-  randomEnemySpawn() {
-    if (Math.random() > 0.991) {
-      this.enemies.push(new Enemy(this.canvas, this.ctx));
-      console.log(this.enemies);
-    }
-  }
-  checkCollision(enemy, player) {
-    const isInX =
-      enemy.rightEdge() >= player.leftEdge() &&
-      enemy.leftEdge() <= player.rightEdge();
-    const isInY =
-      enemy.topEdge() <= player.bottomEdge() &&
-      enemy.bottomEdge() >= player.topEdge();
-    return isInX && isInY;
-  }
 }
 export default Game;

@@ -16,7 +16,8 @@
   max-height: 70%;
 }
 
-img {
+#player,
+#enemy {
   display: none;
 }
 
@@ -36,11 +37,11 @@ img {
   background-size: cover;
 }
 .homepage div {
-  width: 50%;
+  width: 40%;
 }
 .homepage p {
-  color: palevioletred;
-  font-size: 2vw;
+  color: black;
+  font-size: 1.5vw;
 }
 
 .hide {

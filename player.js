@@ -5,17 +5,18 @@ class Player {
     this.lives = lives;
     this.x = this.canvas.width / 2;
     this.y = this.canvas.height / 2;
-    this.frameX = 9;
-    this.frameY = 0;
+    this.frameX = 0;
+    this.frameY = 8.6;
     this.width = 64;
     this.height = 2000 / 30;
     this.hitboxWidth = this.width;
     this.hitboxHeight = this.height;
     this.attackWidth = 90;
-    this.speedX = 7;
-    this.speedY = 7;
+    this.speedX = 4;
+    this.speedY = 4;
     this.attackMode = false;
     this.image = document.getElementById("player");
+    this.attackMode = false;
   }
   update(input) {
     if (
@@ -42,12 +43,14 @@ class Player {
     window.addEventListener("keydown", (event) => {
       if (event.code === "Space") {
         this.attack();
+        console.log(this.attackMode);
       }
     });
     window.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
         this.hitboxWidth = this.width;
         this.attackMode = false;
+        console.log(this.attackMode);
       }
     });
   }
