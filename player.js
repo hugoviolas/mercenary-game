@@ -3,7 +3,7 @@ class Player {
     this.canvas = canvas;
     this.ctx = ctx;
     this.lives = lives;
-    this.x = this.canvas.width / 2;
+    this.x = 10;
     this.y = this.canvas.height / 2;
     this.frameX = 0;
     this.frameY = 8.6;

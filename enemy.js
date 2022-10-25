@@ -1,5 +1,5 @@
 /**
- * Penser à ajouter markedfordeletion
+ * Penser à créer class enemy follower
  */
 import Arrow from "./arrow.js";
 import Game from "./game.js";
@@ -128,6 +128,15 @@ class Enemy {
   }
   topEdge() {
     return this.y;
+  }
+  followPlayer(player) {
+    if (this.x > player.x || this.y > player.y) {
+      this.x--;
+      this.y--;
+    } else if (this.x < player.x || this.y < player.y) {
+      this.x++;
+      this.y++;
+    }
   }
 }
 

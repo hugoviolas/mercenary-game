@@ -3,7 +3,7 @@ const canvas = document.getElementById("canvas");
 const easy = document.getElementById("easy");
 const normal = document.getElementById("normal");
 const hardcore = document.getElementById("hardcore");
-const button = document.querySelectorAll("button");
+const button = document.querySelectorAll("#button");
 const homepage = document.querySelector(".homepage");
 
 // Faire 1 seul eventListener, un switchCase avec les différents modes en fonction du textContent du bouton
@@ -15,14 +15,21 @@ easy.addEventListener("click", () => {
   easy.classList.toggle("hide");
   canvas.classList.toggle("hide");
   homepage.classList.toggle("hide");
+  let lastTime = 0;
   const game = new Game();
-  function animate() {
+
+  function animate(frame) {
+    const deltaTime = frame - lastTime;
+    lastTime = frame;
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
     game.frame = requestAnimationFrame(animate);
-    game.update();
+    game.update(deltaTime);
     game.draw();
+    // console.log(deltaTime);
+    // console.log(frame);
   }
-  animate();
+
+  animate(0);
 });
 
 normal.addEventListener("click", () => {

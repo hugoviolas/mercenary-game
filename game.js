@@ -18,11 +18,12 @@ class Game {
     this.frame = 0;
     this.time = null;
     this.enemies = [];
-    this.waves = [3, 7, 10];
+    this.waves = [3, 7, 10, 15, 17];
     this.waveNumber = 0;
     this.finishedWave = false;
     this.gameover = false;
-    this.gameTime = 0;
+    this.messageTimer = 0;
+    this.maxMessageTimer = 5000;
     this.counter = 0;
   }
   init() {
@@ -32,26 +33,36 @@ class Game {
     this.canvas.height = 800;
   }
   // Runed on every animation frame
-  update() {
+  update(deltaTime) {
     this.player.update(this.input.keys);
-    if (!this.enemies.length) {
-      while (this.counter < 5000 && !this.gameover) {
-        this.ui.nextWave(this.waveNumber + 1);
-        this.counter++;
+    if (
+      this.messageTimer < this.maxMessageTimer &&
+      !this.gameover &&
+      this.waveNumber !== 0
+    ) {
+      this.messageTimer += deltaTime;
+      this.ui.nextWave(this.waveNumber);
+    } else {
+      if (!this.enemies.length) {
+        if (this.waveNumber === 1) {
+          let reloadButton = document.querySelector(".reload");
+          reloadButton.classList.toggle("hide");
+          reloadButton.addEventListener("click", () => {
+            location.reload();
+          });
+          this.gameover = true;
+          //alert("you won");
+          this.ui.win(this.waveNumber);
+          cancelAnimationFrame(this.frame);
+          return;
+        }
+        this.waveGenerator();
       }
-      if (this.waveNumber === 4) {
-        this.gameover = true;
-        alert("you won");
-        cancelAnimationFrame(this.frame);
-        return;
-      }
-
-      this.waveGenerator();
-      this.counter = 0;
     }
     this.enemies.forEach((enemy) => {
       enemy.update();
       enemy.move();
+      //enemy.followPlayer(this.player);
       if (
         this.checkCollision(enemy, this.player) &&
         this.player.attackMode === true
@@ -78,7 +89,7 @@ class Game {
       enemy.isOutOfBound(this.player);
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
-    if (this.player.lives === 0) {
+    if (this.player.lives < 1) {
       alert("Game Over");
       cancelAnimationFrame(this.frame);
       return;
@@ -110,6 +121,7 @@ class Game {
       this.enemies.push(new Enemy(this.canvas, this.ctx, this));
     }
     this.waveNumber += 1;
+    this.messageTimer = 0;
   }
 
   checkCollision(enemy, player) {

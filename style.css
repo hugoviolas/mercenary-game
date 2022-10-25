@@ -59,11 +59,24 @@ button {
   margin: 20px;
 }
 
-button:hover {
+#buttons button:hover {
   font-size: 2vw;
 }
 
 #hardcore {
   font-family: "Nosifer", cursive;
   color: red;
+}
+
+.reload {
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  top: 65%;
+  left: 39%;
+  font-size: 4vw;
+}
+
+.reload:hover {
+  font-size: 4.5vw;
 }
