@@ -8,7 +8,7 @@ class Player {
     this.frameX = 0;
     this.frameY = 8.6;
     this.width = 128;
-    this.height = (2000 / 30) * 2;
+    this.height = 133;
     this.hitboxWidth = this.width - 70;
     this.hitboxHeight = this.height - 70;
     this.attackWidth = 70;
@@ -60,8 +60,8 @@ class Player {
     this.hitbox(this.hitboxWidth, this.hitboxHeight);
     this.ctx.drawImage(
       this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
+      this.frameX * this.width + 40,
+      this.frameY * this.height + 40,
       this.width,
       this.height,
       this.x,
@@ -72,8 +72,8 @@ class Player {
   }
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
-    this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x + 40, this.y + 40, width, height);
+    this.ctx.strokeStyle = "gold";
+    this.ctx.strokeRect(this.x, this.y, width, height);
   }
   // Attack method makes the hitbox grow bigger as the player uses his sword
   attack() {

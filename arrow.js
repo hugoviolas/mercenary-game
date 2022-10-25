@@ -20,8 +20,8 @@ class Arrow {
     this.hitbox(this.hitboxWidth, this.hitboxHeight);
     this.ctx.drawImage(
       this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
+      this.frameX * this.width + 40,
+      this.frameY * this.height + 40,
       this.width,
       this.height,
       this.x,
@@ -33,7 +33,7 @@ class Arrow {
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
     this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x + 40, this.y + 40, width, height);
+    this.ctx.strokeRect(this.x, this.y, width, height);
   }
   move() {
     this.x += this.speedX;

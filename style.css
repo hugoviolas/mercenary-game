@@ -19,7 +19,9 @@
 }
 
 #player,
-#enemy {
+#enemy,
+#bigEnemy,
+#bigAttack {
   display: none;
 }
 

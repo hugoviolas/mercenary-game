@@ -16,7 +16,7 @@ class Enemy {
       (this.canvas.height / 2 - 66);
     this.speedX = -1;
     this.width = 128;
-    this.height = (2000 / 30) * 2;
+    this.height = 133;
     this.hitboxWidth = this.width - 70;
     this.hitboxHeight = this.height - 70;
     this.ismoving = true;
@@ -29,6 +29,7 @@ class Enemy {
     this.maxFrame = 5;
     this.counter = 3;
     this.isShooting = false;
+    this.type = "bow";
   }
   update() {
     if (this.isShooting) {
@@ -54,8 +55,8 @@ class Enemy {
     if (this.isShooting) {
       this.ctx.drawImage(
         this.image,
-        2 * this.width,
-        1 * this.height,
+        2 * this.width + 30,
+        1 * this.height + 30,
         this.width,
         this.height,
         this.x,
@@ -67,8 +68,8 @@ class Enemy {
     } else {
       this.ctx.drawImage(
         this.image,
-        this.frameX * this.width,
-        this.frameY * this.height,
+        this.frameX * this.width + 30,
+        this.frameY * this.height + 30,
         this.width,
         this.height,
         this.x,
@@ -84,8 +85,8 @@ class Enemy {
   }
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
-    this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x + 30, this.y + 30, width, height);
+    this.ctx.strokeStyle = "yellow";
+    this.ctx.strokeRect(this.x, this.y, width, height);
   }
   attack() {
     if (!this.numOfArrows || this.game.frame % 99) {
@@ -128,15 +129,6 @@ class Enemy {
   }
   topEdge() {
     return this.y;
-  }
-  followPlayer(player) {
-    if (this.x > player.x || this.y > player.y) {
-      this.x--;
-      this.y--;
-    } else if (this.x < player.x || this.y < player.y) {
-      this.x++;
-      this.y++;
-    }
   }
 }
 

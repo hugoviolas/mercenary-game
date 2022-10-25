@@ -38,6 +38,19 @@ class UI {
       this.canvas.height / 2 + 100
     );
   }
+  lose() {
+    this.ctx.fillText(
+      `You're dead !`,
+      this.canvas.width / 2 - 100,
+      this.canvas.height / 2
+    );
+
+    this.ctx.fillText(
+      `The skeletons are inside the castle...`,
+      this.canvas.width / 2 - 400,
+      this.canvas.height / 2 + 100
+    );
+  }
 }
 
 export default UI;

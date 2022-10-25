@@ -1,7 +1,7 @@
 import Player from "./player.js";
 import InputHandler from "./inputHandler.js";
 import Enemy from "./enemy.js";
-import Arrow from "./arrow.js";
+import BigEnemy from "./bigEnemy.js";
 import UI from "./UI.js";
 /**
  * Ajouter le fonction de suppress
@@ -44,14 +44,13 @@ class Game {
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {
-        if (this.waveNumber === 1) {
+        if (this.waveNumber === 4) {
           let reloadButton = document.querySelector(".reload");
           reloadButton.classList.toggle("hide");
           reloadButton.addEventListener("click", () => {
             location.reload();
           });
           this.gameover = true;
-          //alert("you won");
           this.ui.win(this.waveNumber);
           cancelAnimationFrame(this.frame);
           return;
@@ -63,11 +62,13 @@ class Game {
       enemy.update();
       enemy.move();
       //enemy.followPlayer(this.player);
-      if (
-        this.checkCollision(enemy, this.player) &&
-        this.player.attackMode === true
-      ) {
-        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+
+      if (this.checkCollision(enemy, this.player) && this.player.attackMode) {
+        enemy.lives--;
+        console.log(enemy.lives);
+        if (enemy.lives === 0) {
+          this.enemies.splice(this.enemies.indexOf(enemy), 1);
+        }
       }
       // Le joueur perd une vie si touché par enemy PAS SUR DE GARDER CETTE FONCTION
       //   } else if (
@@ -77,20 +78,25 @@ class Game {
       //     this.player.lives -= 1;
       //     console.log(this.player.lives);
       //   }
-      enemy.attack();
+      if (enemy.type !== "bigEnemy") {
+        enemy.attack();
 
-      enemy.arrows.forEach((arrow) => {
-        if (arrow.checkCollision(this.player)) {
-          this.player.lives -= 1;
-          arrow.markedForDeletion = true;
-        }
-      });
-      enemy.arrows = enemy.arrows.filter((arrow) => !arrow.markedForDeletion);
-      enemy.isOutOfBound(this.player);
+        enemy.arrows.forEach((arrow) => {
+          if (arrow.checkCollision(this.player)) {
+            this.player.lives -= 1;
+            arrow.markedForDeletion = true;
+          }
+        });
+        enemy.arrows = enemy.arrows.filter((arrow) => !arrow.markedForDeletion);
+        enemy.isOutOfBound(this.player);
+      } else {
+        enemy.followPlayer(this.player);
+      }
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     if (this.player.lives < 1) {
-      alert("Game Over");
+      //alert("Game Over");
+      this.ui.lose();
       cancelAnimationFrame(this.frame);
       return;
     }
@@ -118,7 +124,12 @@ class Game {
       return;
     }
     for (let i = 0; i < this.waves[this.waveNumber]; i++) {
-      this.enemies.push(new Enemy(this.canvas, this.ctx, this));
+      if (Math.random() < 0.9) {
+        this.enemies.push(new Enemy(this.canvas, this.ctx, this));
+      } else {
+        console.log("Big Enemy!");
+        this.enemies.push(new BigEnemy(this.canvas, this.ctx, this));
+      }
     }
     this.waveNumber += 1;
     this.messageTimer = 0;
@@ -126,11 +137,19 @@ class Game {
 
   checkCollision(enemy, player) {
     const isInX =
-      enemy.rightEdge() >= player.leftEdge() &&
-      enemy.leftEdge() <= player.rightEdge();
+      (enemy.rightEdge() >= player.leftEdge() &&
+        enemy.leftEdge() <= player.leftEdge()) ||
+      (enemy.rightEdge() >= player.rightEdge() &&
+        enemy.leftEdge() <= player.rightEdge()) ||
+      (enemy.rightEdge() >= player.rightEdge() &&
+        enemy.leftEdge() <= player.leftEdge());
     const isInY =
-      enemy.topEdge() <= player.bottomEdge() &&
-      enemy.bottomEdge() >= player.topEdge();
+      (enemy.topEdge() <= player.topEdge() &&
+        enemy.bottomEdge() >= player.topEdge()) ||
+      (enemy.topEdge() <= player.bottomEdge() &&
+        enemy.bottomEdge() >= player.bottomEdge()) ||
+      (enemy.topEdge() <= player.topEdge() &&
+        enemy.bottomEdge() >= player.bottomEdge());
     return isInX && isInY;
   }
   //   startGame() {
