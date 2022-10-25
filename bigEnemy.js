@@ -15,6 +15,9 @@ class BigEnemy {
     this.height = 100;
     this.frameX = 0;
     this.frameY = 0;
+    this.attackFrameX = 1;
+    this.attackFrameY = 0;
+    this.attackMaxFrame = 10;
     this.maxFrame = 3;
     this.counter = 3;
     this.image = document.getElementById("bigEnemy");
@@ -24,19 +27,31 @@ class BigEnemy {
     this.type = "bigEnemy";
     this.attackMode = false;
   }
-  update() {
+  update(player) {
     if (this.attackMode) {
-      return;
-    }
-    if (this.counter > 0) {
-      this.counter -= 1;
-    } else {
-      if (this.frameX < 20 && this.frameX < this.maxFrame) {
-        this.frameX++;
+      if (this.counter > 0) {
+        this.counter -= 1;
       } else {
-        this.frameX = 0;
+        if (this.attackFrameX < this.attackMaxFrame) {
+          this.attackFrameX++;
+        } else {
+          this.attackFrameX = 0;
+          player.lives -= 1;
+          this.attackMode = false;
+        }
+        this.counter = 3;
       }
-      this.counter = 3;
+    } else {
+      if (this.counter > 0) {
+        this.counter -= 1;
+      } else {
+        if (this.frameX < 20 && this.frameX < this.maxFrame) {
+          this.frameX++;
+        } else {
+          this.frameX = 0;
+        }
+        this.counter = 3;
+      }
     }
   }
   draw() {
@@ -45,29 +60,42 @@ class BigEnemy {
     // this.ctx.strokeStyle = "red";
     // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     //this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    this.ctx.drawImage(
-      this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
-      this.width,
-      this.height,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
+    if (this.attackMode) {
+      this.ctx.drawImage(
+        this.attackImage,
+        this.attackFrameX * this.width,
+        this.attackFrameY * this.height,
+        this.width,
+        this.height,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+    } else {
+      this.ctx.drawImage(
+        this.image,
+        this.frameX * this.width,
+        this.frameY * this.height,
+        this.width,
+        this.height,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+    }
   }
   move() {
     this.x += this.speedX;
   }
-  attack() {
-    console.log("attack");
+  bigAttack(player) {
+    //player.lives -= 1;
   }
   isOutOfBound(player) {
     if (this.x < 0 - this.width) {
       player.lives -= 1;
       this.markedForDeletion = true;
-      console.log(player.lives);
     }
   }
   hitbox(width, height) {
@@ -75,24 +103,20 @@ class BigEnemy {
     this.ctx.strokeRect(this.x, this.y, width, height);
   }
   followPlayer(player) {
-    if (this.x === player.y && this.y === player.y) {
-      this.attackMode = true;
-    } else {
-      this.attackMode = false;
-      if (this.x > player.x) {
-        this.x--;
-        if (this.y > player.y) {
-          this.y--;
-        } else if (this.y < player.y) {
-          this.y++;
-        }
-      } else if (this.x < player.x) {
-        this.x++;
-        if (this.y > player.y) {
-          this.y--;
-        } else if (this.y < player.y) {
-          this.y++;
-        }
+    //console.log("Player X : " + player.x, "Enemy x : " + this.x);
+    if (this.x > player.x) {
+      this.x--;
+      if (this.y > player.y) {
+        this.y--;
+      } else if (this.y < player.y) {
+        this.y++;
+      }
+    } else if (this.x < player.x) {
+      this.x++;
+      if (this.y > player.y) {
+        this.y--;
+      } else if (this.y < player.y) {
+        this.y++;
       }
     }
   }

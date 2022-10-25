@@ -16,7 +16,7 @@ class Enemy {
       (this.canvas.height / 2 - 66);
     this.speedX = -1;
     this.width = 128;
-    this.height = 133;
+    this.height = 130;
     this.hitboxWidth = this.width - 70;
     this.hitboxHeight = this.height - 70;
     this.ismoving = true;

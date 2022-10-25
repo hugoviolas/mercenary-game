@@ -3,9 +3,6 @@ import InputHandler from "./inputHandler.js";
 import Enemy from "./enemy.js";
 import BigEnemy from "./bigEnemy.js";
 import UI from "./UI.js";
-/**
- * Ajouter le fonction de suppress
- */
 
 class Game {
   constructor(lives) {
@@ -18,7 +15,7 @@ class Game {
     this.frame = 0;
     this.time = null;
     this.enemies = [];
-    this.waves = [3, 7, 10, 15, 17];
+    this.waves = [1, 7, 10, 15, 17];
     this.waveNumber = 0;
     this.finishedWave = false;
     this.gameover = false;
@@ -44,7 +41,7 @@ class Game {
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {
-        if (this.waveNumber === 4) {
+        if (this.waveNumber === 5) {
           let reloadButton = document.querySelector(".reload");
           reloadButton.classList.toggle("hide");
           reloadButton.addEventListener("click", () => {
@@ -59,9 +56,8 @@ class Game {
       }
     }
     this.enemies.forEach((enemy) => {
-      enemy.update();
+      enemy.update(this.player);
       enemy.move();
-      //enemy.followPlayer(this.player);
 
       if (this.checkCollision(enemy, this.player) && this.player.attackMode) {
         enemy.lives--;
@@ -70,17 +66,9 @@ class Game {
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
         }
       }
-      // Le joueur perd une vie si touché par enemy PAS SUR DE GARDER CETTE FONCTION
-      //   } else if (
-      //     this.checkCollision(enemy, this.player) &&
-      //     this.player.attackMode === false
-      //   ) {
-      //     this.player.lives -= 1;
-      //     console.log(this.player.lives);
-      //   }
+
       if (enemy.type !== "bigEnemy") {
         enemy.attack();
-
         enemy.arrows.forEach((arrow) => {
           if (arrow.checkCollision(this.player)) {
             this.player.lives -= 1;
@@ -90,6 +78,10 @@ class Game {
         enemy.arrows = enemy.arrows.filter((arrow) => !arrow.markedForDeletion);
         enemy.isOutOfBound(this.player);
       } else {
+        if (this.checkCollision(enemy, this.player)) {
+          enemy.attackMode = true;
+          enemy.bigAttack(this.player);
+        }
         enemy.followPlayer(this.player);
       }
     });
@@ -109,22 +101,14 @@ class Game {
     });
     this.ui.draw(this.player);
   }
-  // Première version du générateur d'enemis, tourne en continue
-  //   randomEnemySpawn(number) {
-  //     for (let i = 0; i < number; i++) {
-  //       if (Math.random() > 0.991) {
-  //         this.enemies.push(new Enemy(this.canvas, this.ctx, this));
-  //         console.log(this.enemies);
-  //       }
-  //     }
-  //   }
+
   waveGenerator() {
     console.log("<<<<<<<<<<<<<<<<<");
     if (this.frame % 99) {
       return;
     }
     for (let i = 0; i < this.waves[this.waveNumber]; i++) {
-      if (Math.random() < 0.9) {
+      if (Math.random() < 0.7) {
         this.enemies.push(new Enemy(this.canvas, this.ctx, this));
       } else {
         console.log("Big Enemy!");
