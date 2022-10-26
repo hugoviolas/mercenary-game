@@ -9,13 +9,13 @@ class Game {
     this.canvas = null;
     this.ctx = null;
     this.init();
-    this.player = new Player(this.canvas, this.ctx, 10);
+    this.player = new Player(this.canvas, this.ctx, lives);
     this.input = new InputHandler(this.player);
     this.ui = new UI(this.canvas, this.ctx);
     this.frame = 0;
     this.time = null;
     this.enemies = [];
-    this.waves = [1, 7, 10, 15, 17];
+    this.waves = [3, 7, 10, 12, 14];
     this.waveNumber = 0;
     this.finishedWave = false;
     this.gameover = false;
@@ -37,19 +37,16 @@ class Game {
       !this.gameover &&
       this.waveNumber !== 0
     ) {
+      // Shows a wave message during 5 seconds
       this.messageTimer += deltaTime;
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {
-        if (this.waveNumber === 5) {
-          let reloadButton = document.querySelector(".reload");
-          reloadButton.classList.toggle("hide");
-          reloadButton.addEventListener("click", () => {
-            location.reload();
-          });
-          this.gameover = true;
-          this.ui.win(this.waveNumber);
+        if (this.waveNumber === 1) {
+          //this.gameover = true;
           cancelAnimationFrame(this.frame);
+          this.reloadGame();
+          this.ui.win(this.waveNumber);
           return;
         }
         this.waveGenerator();
@@ -60,8 +57,7 @@ class Game {
       enemy.move();
 
       if (this.checkCollision(enemy, this.player) && this.player.attackMode) {
-        enemy.lives--;
-        console.log(enemy.lives);
+        enemy.lives -= 1;
         if (enemy.lives === 0) {
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
         }
@@ -80,14 +76,13 @@ class Game {
       } else {
         if (this.checkCollision(enemy, this.player)) {
           enemy.attackMode = true;
-          //enemy.bigAttack(this.player);
         }
         enemy.followPlayer(this.player);
       }
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     if (this.player.lives < 1) {
-      //alert("Game Over");
+      this.reloadGame();
       this.ui.lose();
       cancelAnimationFrame(this.frame);
       return;
@@ -103,15 +98,13 @@ class Game {
   }
 
   waveGenerator() {
-    console.log("<<<<<<<<<<<<<<<<<");
     if (this.frame % 99) {
       return;
     }
     for (let i = 0; i < this.waves[this.waveNumber]; i++) {
-      if (Math.random() < 0.7) {
+      if (Math.random() < 0.8) {
         this.enemies.push(new Enemy(this.canvas, this.ctx, this));
       } else {
-        console.log("Big Enemy!");
         this.enemies.push(new BigEnemy(this.canvas, this.ctx, this));
       }
     }
@@ -135,6 +128,25 @@ class Game {
       (enemy.topEdge() <= player.topEdge() &&
         enemy.bottomEdge() >= player.bottomEdge());
     return isInX && isInY;
+  }
+  reloadGame() {
+    const reloadButton = document.querySelector(".reload");
+    const canvas = document.getElementById("canvas");
+    const homepage = document.querySelector(".homepage");
+    const button = document.querySelectorAll("#buttons");
+    reloadButton.classList.toggle("hide");
+    reloadButton.addEventListener(
+      "click",
+      () => {
+        canvas.classList.toggle("hide");
+        homepage.classList.toggle("hide");
+        button.forEach((btn) => {
+          btn.classList.toggle("hide");
+        });
+        reloadButton.classList.toggle("hide");
+      },
+      { once: true }
+    );
   }
   //   startGame() {
   //     console.log("Game Started");

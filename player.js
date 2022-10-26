@@ -31,7 +31,7 @@ class Player {
 
     this.width = 128;
     this.height = 133;
-    this.hitboxWidth = this.width - 70;
+    this.hitboxWidth = this.width - 90;
     this.hitboxHeight = this.height - 70;
     this.attackWidth = 70;
     this.speedX = 4;
@@ -43,7 +43,7 @@ class Player {
     // Makes the player move
     if (
       (input.includes("ArrowRight") || input.includes("KeyD")) &&
-      this.x < this.canvas.width - this.width
+      this.x < this.canvas.width - this.hitboxWidth
     ) {
       this.forward = true;
       this.x += this.speedX;
@@ -57,7 +57,7 @@ class Player {
       this.animateBackwards();
     } else if (
       (input.includes("ArrowUp") || input.includes("KeyW")) &&
-      this.y > this.canvas.height / 2 - this.height + 15
+      this.y > this.canvas.height / 2 - this.hitboxHeight + 15
     ) {
       if (this.forward) {
         this.animateForward();
@@ -68,7 +68,7 @@ class Player {
       }
     } else if (
       (input.includes("ArrowDown") || input.includes("KeyS")) &&
-      this.y < this.canvas.height - this.height / 1.5
+      this.y < this.canvas.height - this.hitboxHeight / 1.5
     ) {
       if (this.forward) {
         this.animateForward();
@@ -85,7 +85,7 @@ class Player {
     });
     window.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
-        this.hitboxWidth = this.width - 70;
+        this.hitboxWidth = this.width - 90;
         this.attackMode = false;
       }
     });
@@ -97,8 +97,6 @@ class Player {
     //this.ctx.fillRect(this.x, this.y, this.width, this.height);
     this.hitbox(this.hitboxWidth, this.hitboxHeight);
     if (this.attackMode && this.forward) {
-      console.log("attack");
-
       this.ctx.drawImage(
         this.attackImage,
         this.attackFrameX * this.width + 40,
@@ -173,19 +171,6 @@ class Player {
       this.counter = 3;
     }
   }
-  // Doesn't function well, i'll try later if I have enough time
-  //   animateAttackForward() {
-  //     if (this.attackCounter > 0) {
-  //       this.attackCounter -= 1;
-  //     } else {
-  //       if (this.attackFrameX < this.attackMaxFrame) {
-  //         this.attackFrameX++;
-  //       } else {
-  //         this.attackFrameX = -0.1;
-  //       }
-  //       this.attackCounter = 3;
-  //     }
-  //   }
   hitbox(width, height) {
     this.ctx.fillStyle = "black";
     this.ctx.strokeStyle = "gold";
@@ -210,6 +195,19 @@ class Player {
   topEdge() {
     return this.y;
   }
+  // Doesn't function well, i'll try later if I have enough time
+  //   animateAttackForward() {
+  //     if (this.attackCounter > 0) {
+  //       this.attackCounter -= 1;
+  //     } else {
+  //       if (this.attackFrameX < this.attackMaxFrame) {
+  //         this.attackFrameX++;
+  //       } else {
+  //         this.attackFrameX = -0.1;
+  //       }
+  //       this.attackCounter = 3;
+  //     }
+  //   }
 }
 
 export default Player;

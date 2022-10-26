@@ -17,7 +17,7 @@ class Arrow {
   draw() {
     // this.ctx.strokeStyle = "blue";
     // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    this.hitbox(this.hitboxWidth, this.hitboxHeight);
+    //this.hitbox(this.hitboxWidth, this.hitboxHeight);
     this.ctx.drawImage(
       this.image,
       this.frameX * this.width + 40,

@@ -55,8 +55,8 @@ class BigEnemy {
     }
   }
   draw() {
-    this.hitbox(this.hitboxWidth, this.hitboxHeight);
-    this.ctx.fillStyle = "red";
+    //   this.ctx.fillStyle = "red";
+    // this.hitbox(this.hitboxWidth, this.hitboxHeight);
     // this.ctx.strokeStyle = "red";
     // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     //this.ctx.fillRect(this.x, this.y, this.width, this.height);

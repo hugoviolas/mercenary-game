@@ -51,7 +51,7 @@ class Enemy {
     // this.ctx.strokeStyle = "red";
     // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     //this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    this.hitbox(this.hitboxWidth, this.hitboxHeight);
+    //this.hitbox(this.hitboxWidth, this.hitboxHeight);
     if (this.isShooting) {
       this.ctx.drawImage(
         this.image,
@@ -64,7 +64,6 @@ class Enemy {
         this.width,
         this.height
       );
-      console.log("shoot");
     } else {
       this.ctx.drawImage(
         this.image,
@@ -109,7 +108,6 @@ class Enemy {
     if (this.x < 0 - this.width) {
       player.lives -= 1;
       this.markedForDeletion = true;
-      console.log(player.lives);
     }
   }
   move() {

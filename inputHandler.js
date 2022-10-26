@@ -23,13 +23,6 @@ class InputHandler {
       ) {
         this.keys.push(event.code);
       }
-      //   } else if (
-      //     event.code === "Space" &&
-      //     this.keys.indexOf(event.code) === -1
-      //   ) {
-      //     this.keys.push(event.code);
-      //   }
-      //   console.log(event.code);
     });
     window.addEventListener("keyup", (event) => {
       if (event.code === "ArrowRight" || event.code === "KeyD") {
