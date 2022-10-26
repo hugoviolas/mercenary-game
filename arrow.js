@@ -3,11 +3,11 @@ class Arrow {
     this.canvas = canvas;
     this.ctx = ctx;
     this.x = x;
-    this.y = y;
+    this.y = y + 30;
     this.width = 64 * 2;
     this.height = (2000 / 30) * 2;
     this.hitboxWidth = 50;
-    this.hitboxHeight = 40;
+    this.hitboxHeight = 5;
     this.speedX = -3;
     this.image = document.getElementById("enemy");
     this.frameX = 8.5;
@@ -21,7 +21,7 @@ class Arrow {
     this.ctx.drawImage(
       this.image,
       this.frameX * this.width + 40,
-      this.frameY * this.height + 40,
+      this.frameY * this.height + 60,
       this.width,
       this.height,
       this.x,

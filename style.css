@@ -21,7 +21,10 @@
 #player,
 #enemy,
 #bigEnemy,
-#bigAttack {
+#bigAttack,
+#reversedPlayer,
+#attackPlayer,
+#attackPlayerBackwards {
   display: none;
 }
 

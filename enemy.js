@@ -56,7 +56,7 @@ class Enemy {
       this.ctx.drawImage(
         this.image,
         2 * this.width + 30,
-        1 * this.height + 30,
+        this.height + 30,
         this.width,
         this.height,
         this.x,

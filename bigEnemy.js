@@ -45,6 +45,7 @@ class BigEnemy {
       if (this.counter > 0) {
         this.counter -= 1;
       } else {
+        // Have to check if < 20 is still needed
         if (this.frameX < 20 && this.frameX < this.maxFrame) {
           this.frameX++;
         } else {
@@ -104,14 +105,14 @@ class BigEnemy {
   }
   followPlayer(player) {
     //console.log("Player X : " + player.x, "Enemy x : " + this.x);
-    if (this.x > player.x) {
+    if (this.x > player.x + 30) {
       this.x--;
       if (this.y > player.y) {
         this.y--;
       } else if (this.y < player.y) {
         this.y++;
       }
-    } else if (this.x < player.x) {
+    } else if (this.x < player.x + 10) {
       this.x++;
       if (this.y > player.y) {
         this.y--;
