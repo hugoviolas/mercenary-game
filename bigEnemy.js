@@ -15,9 +15,9 @@ class BigEnemy {
     this.height = 100;
     this.frameX = 0;
     this.frameY = 0;
-    this.attackFrameX = 1;
+    this.attackFrameX = 0.2;
     this.attackFrameY = 0;
-    this.attackMaxFrame = 10;
+    this.attackMaxFrame = 7;
     this.maxFrame = 3;
     this.counter = 3;
     this.image = document.getElementById("bigEnemy");
@@ -35,7 +35,7 @@ class BigEnemy {
         if (this.attackFrameX < this.attackMaxFrame) {
           this.attackFrameX++;
         } else {
-          this.attackFrameX = 0;
+          this.attackFrameX = 0.2;
           player.lives -= 1;
           this.attackMode = false;
         }
@@ -45,8 +45,7 @@ class BigEnemy {
       if (this.counter > 0) {
         this.counter -= 1;
       } else {
-        // Have to check if < 20 is still needed
-        if (this.frameX < 20 && this.frameX < this.maxFrame) {
+        if (this.frameX < this.maxFrame) {
           this.frameX++;
         } else {
           this.frameX = 0;
@@ -90,9 +89,11 @@ class BigEnemy {
   move() {
     this.x += this.speedX;
   }
-  bigAttack(player) {
-    //player.lives -= 1;
-  }
+
+  // Function not usefull yet
+  //   bigAttack(player) {
+  //     player.lives -= 1;
+  //   }
   isOutOfBound(player) {
     if (this.x < 0 - this.width) {
       player.lives -= 1;
@@ -104,7 +105,6 @@ class BigEnemy {
     this.ctx.strokeRect(this.x, this.y, width, height);
   }
   followPlayer(player) {
-    //console.log("Player X : " + player.x, "Enemy x : " + this.x);
     if (this.x > player.x + 30) {
       this.x--;
       if (this.y > player.y) {

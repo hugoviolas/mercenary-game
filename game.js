@@ -80,7 +80,7 @@ class Game {
       } else {
         if (this.checkCollision(enemy, this.player)) {
           enemy.attackMode = true;
-          enemy.bigAttack(this.player);
+          //enemy.bigAttack(this.player);
         }
         enemy.followPlayer(this.player);
       }
