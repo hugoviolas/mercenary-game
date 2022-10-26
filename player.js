@@ -5,6 +5,15 @@ class Player {
     this.lives = lives;
     this.x = 10;
     this.y = this.canvas.height / 2;
+    this.width = 128;
+    this.height = 133;
+    this.hitboxWidth = this.width - 90;
+    this.hitboxHeight = this.height - 70;
+    this.attackWidth = 70;
+    this.speedX = 4;
+    this.speedY = 4;
+    this.attackMode = false;
+    this.forward = true;
     // Frames settings for forward animation
     this.image = document.getElementById("player");
     this.frameX = 0;
@@ -28,16 +37,17 @@ class Player {
     );
     this.attackBackwardsFrameX = 0.6;
     this.attackBackwardsFrameY = -0.3;
-
-    this.width = 128;
-    this.height = 133;
-    this.hitboxWidth = this.width - 90;
-    this.hitboxHeight = this.height - 70;
-    this.attackWidth = 70;
-    this.speedX = 4;
-    this.speedY = 4;
-    this.attackMode = false;
-    this.forward = true;
+    // Audio setup
+    this.swoosh1 = document.createElement("audio");
+    this.swoosh1.src = "./audios/Player/swooshOK.mp3";
+    this.swoosh2 = document.createElement("audio");
+    this.swoosh2.src = "./audios/Player/swoosh2OK.mp3";
+    this.deathScream = document.createElement("audio");
+    this.deathScream.src = "./audios/Player/playerdeathscreamOK.mp3";
+    this.footSteps = document.createElement("audio");
+    this.footSteps.src = "./audios/Player/footstepsOK.mp3";
+    this.hurtSound = document.createElement("audio");
+    this.hurtSound.src = "./audios/Player/hurtPlayerOK.mp3";
   }
   update(input) {
     // Makes the player move
@@ -78,6 +88,14 @@ class Player {
         this.y += this.speedY;
       }
     }
+    //
+    // } else if (input.includes("Space")) {
+    //   this.attack();
+    //   console.log("space");
+    // } else if (!input.includes("Space")) {
+    //   this.attackMode = false;
+    //   this.hitboxWidth = this.width - 90;
+    // }
     window.addEventListener("keydown", (event) => {
       if (event.code === "Space") {
         this.attack();
@@ -95,7 +113,7 @@ class Player {
     // this.ctx.strokeStyle = "red";
     // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     //this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    this.hitbox(this.hitboxWidth, this.hitboxHeight);
+    //this.hitbox(this.hitboxWidth, this.hitboxHeight);
     if (this.attackMode && this.forward) {
       this.ctx.drawImage(
         this.attackImage,
@@ -180,8 +198,20 @@ class Player {
   attack() {
     this.hitboxWidth = this.attackWidth;
     this.attackMode = true;
+    this.swoosh1.play();
   }
-
+  screamToDeath() {
+    this.deathScream.play();
+  }
+  footstepsSound() {
+    this.footSteps.play();
+  }
+  stopFootstepsSound() {
+    this.footSteps.pause();
+  }
+  hurtScream() {
+    this.hurtSound.play();
+  }
   bottomEdge() {
     return this.y + this.hitboxHeight;
   }
@@ -195,7 +225,7 @@ class Player {
   topEdge() {
     return this.y;
   }
-  // Doesn't function well, i'll try later if I have enough time
+  // Doesn't works well, i'll try later if I have enough time
   //   animateAttackForward() {
   //     if (this.attackCounter > 0) {
   //       this.attackCounter -= 1;

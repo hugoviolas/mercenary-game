@@ -14,7 +14,7 @@ class Enemy {
     this.y =
       Math.floor((Math.random() * this.canvas.height) / 2) +
       (this.canvas.height / 2 - 66);
-    this.speedX = -1;
+    this.speedX = -1.5;
     this.width = 128;
     this.height = 130;
     this.hitboxWidth = this.width - 70;
@@ -23,6 +23,7 @@ class Enemy {
     this.arrows = [];
     this.markedForDeletion = false;
     this.numOfArrows = 3;
+    // Images setup
     this.image = document.getElementById("enemy");
     this.frameX = 0;
     this.frameY = 0;
@@ -30,6 +31,11 @@ class Enemy {
     this.counter = 3;
     this.isShooting = false;
     this.type = "bow";
+    //Sound setup
+    this.smallEnemyDeathSound = document.createElement("audio");
+    this.smallEnemyDeathSound.src = "./audios/Enemy/smallEnemyDeathSound.mp3";
+    this.arrowSwoosh = document.createElement("audio");
+    this.arrowSwoosh.src = "./audios/Enemy/arrowSwooshOK.mp3";
   }
   update() {
     if (this.isShooting) {
@@ -96,13 +102,17 @@ class Enemy {
         this.isShooting = true;
         this.stopMove();
         this.arrows.push(new Arrow(this.canvas, this.ctx, this.x, this.y));
+        this.arrowSwoosh.play();
         setTimeout(() => {
-          this.speedX = -0.6;
+          this.speedX = -1.5;
           this.isShooting = false;
         }, 1000);
       }, Math.ceil(Math.random() * 8000) + 1000);
       this.numOfArrows--;
     }
+  }
+  screamToDeath() {
+    this.smallEnemyDeathSound.play();
   }
   isOutOfBound(player) {
     if (this.x < 0 - this.width) {

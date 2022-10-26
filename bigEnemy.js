@@ -13,6 +13,7 @@ class BigEnemy {
     this.speedX = 0;
     this.width = 100;
     this.height = 100;
+    // Images setup
     this.frameX = 0;
     this.frameY = 0;
     this.attackFrameX = 0.2;
@@ -26,6 +27,9 @@ class BigEnemy {
     this.hitboxHeight = this.height;
     this.type = "bigEnemy";
     this.attackMode = false;
+    // Sounds setup
+    this.bigEnemyDeathScream = document.createElement("audio");
+    this.bigEnemyDeathScream.src = "./audios/Enemy/bigEnemyScreamOK.mp3";
   }
   update(player) {
     if (this.attackMode) {
@@ -36,6 +40,7 @@ class BigEnemy {
           this.attackFrameX++;
         } else {
           this.attackFrameX = 0.2;
+          player.hurtScream();
           player.lives -= 1;
           this.attackMode = false;
         }
@@ -90,10 +95,9 @@ class BigEnemy {
     this.x += this.speedX;
   }
 
-  // Function not usefull yet
-  //   bigAttack(player) {
-  //     player.lives -= 1;
-  //   }
+  screamToDeath() {
+    this.bigEnemyDeathScream.play();
+  }
   isOutOfBound(player) {
     if (this.x < 0 - this.width) {
       player.lives -= 1;

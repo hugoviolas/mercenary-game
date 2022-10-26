@@ -22,6 +22,15 @@ class Game {
     this.messageTimer = 0;
     this.maxMessageTimer = 5000;
     this.counter = 0;
+    // Music and ambiance setup
+    // this.homepageMusic = document.createElement("audio");
+    // this.homepageMusic.src = "./audios/Ambiance/LordofTheLandOK.mp3";
+    this.gameAmbiance = document.createElement("audio");
+    this.gameAmbiance.src = "./audios/Ambiance/GatheringDarknessOK.mp3";
+    this.losingMusic = document.createElement("audio");
+    this.losingMusic.src = "./audios/Ambiance/HiddenPastOK.mp3";
+    this.winningSong = document.createElement("audio");
+    this.winningSong.src = "./audios/Ambiance/AchaidhCheide.mp3";
   }
   init() {
     this.canvas = document.getElementById("canvas");
@@ -31,6 +40,12 @@ class Game {
   }
   // Runed on every animation frame
   update(deltaTime) {
+    // console.log(this.input.keys.length);
+    if (this.input.keys.length === 0) {
+      this.player.stopFootstepsSound();
+    } else {
+      this.player.footstepsSound();
+    }
     this.player.update(this.input.keys);
     if (
       this.messageTimer < this.maxMessageTimer &&
@@ -42,8 +57,11 @@ class Game {
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {
-        if (this.waveNumber === 1) {
-          //this.gameover = true;
+        if (this.waveNumber === 5) {
+          this.gameAmbiance.pause();
+          this.gameAmbiance.currentTime = 0;
+          this.winningSong.play();
+          this.gameover = true;
           cancelAnimationFrame(this.frame);
           this.reloadGame();
           this.ui.win(this.waveNumber);
@@ -60,6 +78,7 @@ class Game {
         enemy.lives -= 1;
         if (enemy.lives === 0) {
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
+          enemy.screamToDeath();
         }
       }
 
@@ -67,6 +86,7 @@ class Game {
         enemy.attack();
         enemy.arrows.forEach((arrow) => {
           if (arrow.checkCollision(this.player)) {
+            this.player.hurtScream();
             this.player.lives -= 1;
             arrow.markedForDeletion = true;
           }
@@ -82,6 +102,10 @@ class Game {
     });
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     if (this.player.lives < 1) {
+      this.gameAmbiance.pause();
+      this.gameAmbiance.currentTime = 0;
+      this.losingMusic.play();
+      this.player.screamToDeath();
       this.reloadGame();
       this.ui.lose();
       cancelAnimationFrame(this.frame);
@@ -111,7 +135,9 @@ class Game {
     this.waveNumber += 1;
     this.messageTimer = 0;
   }
-
+  playAmbiance() {
+    this.gameAmbiance.play();
+  }
   checkCollision(enemy, player) {
     const isInX =
       (enemy.rightEdge() >= player.leftEdge() &&
@@ -138,6 +164,10 @@ class Game {
     reloadButton.addEventListener(
       "click",
       () => {
+        this.winningSong.pause();
+        this.winningSong.currentTime = 0;
+        this.losingMusic.pause();
+        this.losingMusic.currentTime = 0;
         canvas.classList.toggle("hide");
         homepage.classList.toggle("hide");
         button.forEach((btn) => {
