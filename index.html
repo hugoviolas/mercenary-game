@@ -18,27 +18,44 @@
       rel="stylesheet"
     />
 
-    <title>Knight Defender</title>
+    <title>Mercenary</title>
   </head>
   <body>
     <canvas id="canvas" class="hide"> </canvas>
-    <div class="homepage">
-      <h1>Knight Defender</h1>
-      <div>
+    <div id="gameview">
+      <div id="controls">
+        <h2>How To Play</h2>
+        <ul>
+          <li>&#8593 / A : move up</li>
+          <li>&#8595 / S : move down</li>
+          <li>&#8592 / Q : move left</li>
+          <li>&#8594 / D : move right</li>
+          <li>Space Bar : sword hit</li>
+        </ul>
         <p>
-          You are a mercenary employed by Prince Haroun. The skeletons are
-          attacking and you are in the front line to defend the main gate of the
-          castle... Don't get hit by the skeletons or their arrows, and don't
-          let them pass!
+          Avoid small skeletons arrows and big skeletons hits, survive the 5
+          waves to win the game
         </p>
       </div>
-      <h2>Choose your difficulty</h2>
-      <div id="buttons">
-        <button id="easy" class="hover">Easy</button>
-        <button id="normal" class="hover">Normal</button>
-        <button id="hardcore" class="hover">Hardcore</button>
+      <div class="homepage">
+        <h1>Mercenary</h1>
+        <div>
+          <p>
+            You are a mercenary employed by Prince Haroun. The skeletons are
+            attacking and you are in the front line to defend the main gate of
+            the castle... Don't get hit by the skeletons or their arrows, and
+            don't let them pass!
+          </p>
+        </div>
+        <h2>Choose your difficulty</h2>
+        <div id="buttons">
+          <button id="easy" class="hover">Easy</button>
+          <button id="normal" class="hover">Normal</button>
+          <button id="hardcore" class="hover">Hardcore</button>
+        </div>
       </div>
     </div>
+
     <div>
       <button class="reload hide">Play Again</button>
     </div>

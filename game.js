@@ -38,9 +38,10 @@ class Game {
     this.canvas.width = 1000;
     this.canvas.height = 800;
   }
+
   // Runed on every animation frame
   update(deltaTime) {
-    // console.log(this.input.keys.length);
+    // Plays footstep sound if the input array is not empty
     if (this.input.keys.length === 0) {
       this.player.stopFootstepsSound();
     } else {
@@ -114,13 +115,12 @@ class Game {
   }
   // Draw all images
   draw() {
+    this.ui.draw(this.player);
     this.player.draw();
     this.enemies.forEach((enemy) => {
       enemy.draw();
     });
-    this.ui.draw(this.player);
   }
-
   waveGenerator() {
     if (this.frame % 99) {
       return;
@@ -160,6 +160,7 @@ class Game {
     const canvas = document.getElementById("canvas");
     const homepage = document.querySelector(".homepage");
     const button = document.querySelectorAll("#buttons");
+    const controls = document.querySelector("#controls");
     reloadButton.classList.toggle("hide");
     reloadButton.addEventListener(
       "click",
@@ -170,6 +171,7 @@ class Game {
         this.losingMusic.currentTime = 0;
         canvas.classList.toggle("hide");
         homepage.classList.toggle("hide");
+        controls.classList.toggle("hide");
         button.forEach((btn) => {
           btn.classList.toggle("hide");
         });
@@ -178,63 +180,5 @@ class Game {
       { once: true }
     );
   }
-  //   startGame() {
-  //     console.log("Game Started");
-  //     setInterval(() => {
-  //       this.frame++;
-  //       this.ctx.clearRect(0, 0, this.canvas.clientWidth, this.canvas.height);
-  //       //this.player.draw();
-  //       this.player.move();
-  //       //this.arrow.draw();
-  //       this.enemies.forEach((enemy) => {
-  //         enemy.draw();
-  //         if (Math.random() > 0.9) {
-  //           enemy.attack();
-  //         }
-  //         if (this.checkCollision(enemy, this.player) && this.player.attackMode) {
-  //           this.enemies.splice(this.enemies.indexOf(enemy), 1);
-  //         }
-  //         enemy.move();
-  //       });
-  //     }, 1000 / 60);
-  //   }
-  //   movingPlayer() {
-  //     document.addEventListener("keydown", (event) => {
-  //       if (event.code === "ArrowRight" || event.code === "KeyD") {
-  //         this.player.speedX = 1;
-  //       } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
-  //         this.player.speedX = -1;
-  //       } else if (event.code === "ArrowUp" || event.code === "KeyW") {
-  //         this.player.speedY = -1;
-  //       } else if (event.code === "ArrowDown" || event.code === "KeyS") {
-  //         this.player.speedY = 1;
-  //       }
-  //     });
-  //     document.addEventListener("keyup", (event) => {
-  //       if (event.code === "ArrowRight" || event.code === "KeyD") {
-  //         this.player.speedX = 0;
-  //       } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
-  //         this.player.speedX = 0;
-  //       } else if (event.code === "ArrowUp" || event.code === "KeyW") {
-  //         this.player.speedY = 0;
-  //       } else if (event.code === "ArrowDown" || event.code === "KeyS") {
-  //         this.player.speedY = 0;
-  //       }
-  //     });
-  //   }
-  //   playerAttack() {
-  //     document.addEventListener("keydown", (event) => {
-  //       if (event.code === "Space") {
-  //         this.player.attack();
-  //         this.player.attackMode = true;
-  //       }
-  //     });
-  //     document.addEventListener("keyup", (event) => {
-  //       if (event.code === "Space") {
-  //         this.player.width -= this.player.attackWidth;
-  //         this.player.attackMode = false;
-  //       }
-  //     });
-  //   }
 }
 export default Game;
