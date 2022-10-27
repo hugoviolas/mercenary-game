@@ -55,6 +55,7 @@ class Game {
     ) {
       // Shows a wave message during 5 seconds
       this.messageTimer += deltaTime;
+      console.log(this.messageTimer);
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {

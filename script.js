@@ -15,8 +15,7 @@ easy.addEventListener("click", () => {
   button.forEach((button) => {
     button.classList.toggle("hide");
   });
-  //   homepageMusic.pause();
-  //   homepageMusic.currentTime = 0;
+
   canvas.classList.toggle("hide");
   homepage.classList.toggle("hide");
   controls.classList.toggle("hide");
@@ -30,8 +29,6 @@ easy.addEventListener("click", () => {
     game.frame = requestAnimationFrame(animate);
     game.update(deltaTime);
     game.draw();
-    // console.log(deltaTime);
-    // console.log(frame);
   }
 
   animate(0);

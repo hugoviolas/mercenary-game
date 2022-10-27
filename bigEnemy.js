@@ -108,23 +108,38 @@ class BigEnemy {
     this.ctx.strokeStyle = "red";
     this.ctx.strokeRect(this.x, this.y, width, height);
   }
+  // Use of setTimeout to delay the big enemy shift
   followPlayer(player) {
     if (this.x > player.x + 30) {
-      this.x--;
+      setTimeout(() => {
+        this.x--;
+      }, Math.floor(Math.random() * 500) + 300);
       if (this.y > player.y) {
-        this.y--;
+        setTimeout(() => {
+          this.y--;
+        }, Math.floor(Math.random() * 500) + 300);
       } else if (this.y < player.y) {
-        this.y++;
+        setTimeout(() => {
+          this.y++;
+        }, Math.floor(Math.random() * 500) + 300);
       }
     } else if (this.x < player.x + 10) {
-      this.x++;
+      setTimeout(() => {
+        this.x++;
+      }, Math.floor(Math.random() * 500) + 300);
+
       if (this.y > player.y) {
-        this.y--;
+        setTimeout(() => {
+          this.y--;
+        }, Math.floor(Math.random() * 500) + 300);
       } else if (this.y < player.y) {
-        this.y++;
+        setTimeout(() => {
+          this.y++;
+        }, Math.floor(Math.random() * 500) + 300);
       }
     }
   }
+  // Declaration of the hitbox edges
   bottomEdge() {
     return this.y + this.hitboxHeight;
   }
