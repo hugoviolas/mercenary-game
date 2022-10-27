@@ -29,7 +29,7 @@ class BigEnemy {
     this.attackMode = false;
     // Sounds setup
     this.bigEnemyDeathScream = document.createElement("audio");
-    this.bigEnemyDeathScream.src = "./audios/Enemy/bigEnemyScreamOK.mp3";
+    this.bigEnemyDeathScream.src = "../audios/Enemy/bigEnemyScreamOK.mp3";
   }
   update(player) {
     if (this.attackMode) {

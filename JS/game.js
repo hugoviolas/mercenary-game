@@ -23,14 +23,12 @@ class Game {
     this.maxMessageTimer = 5000;
     this.counter = 0;
     // Music and ambiance setup
-    // this.homepageMusic = document.createElement("audio");
-    // this.homepageMusic.src = "./audios/Ambiance/LordofTheLandOK.mp3";
     this.gameAmbiance = document.createElement("audio");
-    this.gameAmbiance.src = "./audios/Ambiance/GatheringDarknessOK.mp3";
+    this.gameAmbiance.src = "../audios/Ambiance/GatheringDarknessOK.mp3";
     this.losingMusic = document.createElement("audio");
-    this.losingMusic.src = "./audios/Ambiance/HiddenPastOK.mp3";
+    this.losingMusic.src = "../audios/Ambiance/HiddenPastOK.mp3";
     this.winningSong = document.createElement("audio");
-    this.winningSong.src = "./audios/Ambiance/AchaidhCheideOK.mp3";
+    this.winningSong.src = "../audios/Ambiance/AchaidhCheideOK.mp3";
   }
   init() {
     this.canvas = document.getElementById("canvas");

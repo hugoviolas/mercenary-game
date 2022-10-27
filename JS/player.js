@@ -39,15 +39,15 @@ class Player {
     this.attackBackwardsFrameY = -0.3;
     // Audio setup
     this.swoosh1 = document.createElement("audio");
-    this.swoosh1.src = "./audios/Player/swooshOK.mp3";
+    this.swoosh1.src = "../audios/Player/swooshOK.mp3";
     this.swoosh2 = document.createElement("audio");
-    this.swoosh2.src = "./audios/Player/swoosh2OK.mp3";
+    this.swoosh2.src = "../audios/Player/swoosh2OK.mp3";
     this.deathScream = document.createElement("audio");
-    this.deathScream.src = "./audios/Player/playerdeathscreamOK.mp3";
+    this.deathScream.src = "../audios/Player/playerdeathscreamOK.mp3";
     this.footSteps = document.createElement("audio");
-    this.footSteps.src = "./audios/Player/footstepsOK.mp3";
+    this.footSteps.src = "../audios/Player/footstepsOK.mp3";
     this.hurtSound = document.createElement("audio");
-    this.hurtSound.src = "./audios/Player/hurtPlayerOK.mp3";
+    this.hurtSound.src = "../audios/Player/hurtPlayerOK.mp3";
   }
   update(input, space) {
     // Makes the player move

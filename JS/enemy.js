@@ -2,7 +2,6 @@
  * Penser à créer class enemy follower
  */
 import Arrow from "./arrow.js";
-import Game from "./game.js";
 
 class Enemy {
   constructor(canvas, ctx, game) {
@@ -33,9 +32,9 @@ class Enemy {
     this.type = "bow";
     //Sound setup
     this.smallEnemyDeathSound = document.createElement("audio");
-    this.smallEnemyDeathSound.src = "./audios/Enemy/smallEnemyDeathSound.mp3";
+    this.smallEnemyDeathSound.src = "../audios/Enemy/smallEnemyDeathSound.mp3";
     this.arrowSwoosh = document.createElement("audio");
-    this.arrowSwoosh.src = "./audios/Enemy/arrowSwooshOK.mp3";
+    this.arrowSwoosh.src = "../audios/Enemy/arrowSwooshOK.mp3";
   }
   update() {
     if (this.isShooting) {

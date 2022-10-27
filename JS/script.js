@@ -6,8 +6,6 @@ const hardcore = document.getElementById("hardcore");
 const button = document.querySelectorAll("#buttons");
 const homepage = document.querySelector(".homepage");
 const controls = document.querySelector("#controls");
-// const homepageMusic = document.createElement("audio");
-// homepageMusic.src = "./audios/Ambiance/LordofTheLandOK.mp3";
 
 // Faire 1 seul eventListener, un switchCase avec les différents modes en fonction du textContent du bouton
 
