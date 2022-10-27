@@ -47,7 +47,7 @@ class Game {
     } else {
       this.player.footstepsSound();
     }
-    this.player.update(this.input.keys);
+    this.player.update(this.input.keys, this.input.space);
     if (
       this.messageTimer < this.maxMessageTimer &&
       !this.gameover &&
@@ -55,11 +55,11 @@ class Game {
     ) {
       // Shows a wave message during 5 seconds
       this.messageTimer += deltaTime;
-      console.log(this.messageTimer);
       this.ui.nextWave(this.waveNumber);
     } else {
       if (!this.enemies.length) {
         if (this.waveNumber === 5) {
+          this.gameOver = true;
           this.gameAmbiance.pause();
           this.gameAmbiance.currentTime = 0;
           this.winningSong.play();
@@ -77,7 +77,8 @@ class Game {
       enemy.move();
 
       if (this.checkCollision(enemy, this.player) && this.player.attackMode) {
-        enemy.lives -= 1;
+        // Decreased enemies lives by 0.5 because the decrement was too fast otherwise for big enemies...
+        enemy.lives -= 0.5;
         if (enemy.lives === 0) {
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
           enemy.screamToDeath();
@@ -109,14 +110,13 @@ class Game {
       this.losingMusic.play();
       this.player.screamToDeath();
       this.reloadGame();
-      this.ui.lose();
       cancelAnimationFrame(this.frame);
       return;
     }
   }
   // Draw all images
   draw() {
-    this.ui.draw(this.player);
+    this.ui.draw(this.player, this);
     this.player.draw();
     this.enemies.forEach((enemy) => {
       enemy.draw();

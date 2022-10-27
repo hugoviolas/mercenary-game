@@ -49,7 +49,7 @@ class Player {
     this.hurtSound = document.createElement("audio");
     this.hurtSound.src = "./audios/Player/hurtPlayerOK.mp3";
   }
-  update(input) {
+  update(input, space) {
     // Makes the player move
     if (
       (input.includes("ArrowRight") || input.includes("KeyD")) &&
@@ -88,32 +88,27 @@ class Player {
         this.y += this.speedY;
       }
     }
+    if (space.includes("Space")) {
+      this.attack();
+    } else {
+      this.hitboxWidth = this.width - 90;
+      this.attackMode = false;
+    }
+    //Older version of space bar detection
     //
-    // } else if (input.includes("Space")) {
-    //   this.attack();
-    //   console.log("space");
-    // } else if (!input.includes("Space")) {
-    //   this.attackMode = false;
-    //   this.hitboxWidth = this.width - 90;
-    // }
-    window.addEventListener("keydown", (event) => {
-      if (event.code === "Space") {
-        this.attack();
-      }
-    });
-    window.addEventListener("keyup", (event) => {
-      if (event.code === "Space") {
-        this.hitboxWidth = this.width - 90;
-        this.attackMode = false;
-      }
-    });
+    // window.addEventListener("keydown", (event) => {
+    //   if (event.code === "Space") {
+    //     this.attack();
+    //   }
+    // });
+    // window.addEventListener("keyup", (event) => {
+    //   if (event.code === "Space") {
+    //     this.hitboxWidth = this.width - 90;
+    //     this.attackMode = false;
+    //   }
+    // });
   }
   draw() {
-    // this.ctx.fillStyle = "black";
-    // this.ctx.strokeStyle = "red";
-    // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    //this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    //this.hitbox(this.hitboxWidth, this.hitboxHeight);
     if (this.attackMode && this.forward) {
       this.ctx.drawImage(
         this.attackImage,
@@ -163,6 +158,13 @@ class Player {
         this.height
       );
     }
+    //Hitbox drawing
+    //
+    // this.ctx.fillStyle = "black";
+    // this.ctx.strokeStyle = "red";
+    // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+    //this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    //this.hitbox(this.hitboxWidth, this.hitboxHeight);
   }
   animateForward() {
     // Animates the player
@@ -200,6 +202,7 @@ class Player {
     this.attackMode = true;
     this.swoosh1.play();
   }
+
   screamToDeath() {
     this.deathScream.play();
   }

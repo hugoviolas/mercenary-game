@@ -1,9 +1,9 @@
 class InputHandler {
   constructor(player) {
     this.keys = [];
+    this.space = [];
 
     window.addEventListener("keydown", (event) => {
-      
       if (
         (event.code === "ArrowRight" || event.code === "KeyD") &&
         this.keys.indexOf(event.code) === -1
@@ -26,9 +26,9 @@ class InputHandler {
         this.keys.push(event.code);
       } else if (
         event.code === "Space" &&
-        this.keys.indexOf(event.code) === -1
+        this.space.indexOf(event.code) === -1
       ) {
-        this.keys.push(event.code);
+        this.space.push(event.code);
       }
     });
     window.addEventListener("keyup", (event) => {
@@ -46,14 +46,13 @@ class InputHandler {
         this.keys.splice(this.keys.indexOf(event.code), 1);
       } else if (event.code === "Space") {
         player.stopFootstepsSound();
-        this.keys.splice(this.keys.indexOf(event.code), 1);
+        this.space.splice(this.space.indexOf(event.code), 1);
       }
       //   } else if (event.code === "Space") {
       //     this.keys.splice(this.keys.indexOf(event.code), 1);
       //     player.width -= player.attackwidth;
       //   }
     });
-
   }
 }
 

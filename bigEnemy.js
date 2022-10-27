@@ -94,7 +94,6 @@ class BigEnemy {
   move() {
     this.x += this.speedX;
   }
-
   screamToDeath() {
     this.bigEnemyDeathScream.play();
   }

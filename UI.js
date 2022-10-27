@@ -6,11 +6,14 @@ class UI {
     this.fontSize = 50;
     this.color = "white";
   }
-  draw(player) {
+  draw(player, game) {
     this.ctx.fillStyle = this.color;
     this.ctx.font = this.fontSize + "px " + this.fontFamily;
     //this.ctx.fillText("Bienvenue", 20, 40);
     this.ctx.fillText(`Lives : ${player.lives}`, 20, 40);
+    if (player.lives < 1) {
+      this.lose();
+    }
   }
   nextWave(waveNumber) {
     this.ctx.fillText(
