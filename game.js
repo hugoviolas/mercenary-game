@@ -23,12 +23,13 @@ class Game {
     this.maxMessageTimer = 5000;
     this.counter = 0;
     // Music and ambiance setup
-    this.gameAmbiance = document.createElement("audio");
+    this.gameAmbiance = new Audio();
     this.gameAmbiance.src = "./audios/Ambiance/GatheringDarknessOK.mp3";
-    this.losingMusic = document.createElement("audio");
+    this.losingMusic = new Audio();
     this.losingMusic.src = "./audios/Ambiance/HiddenPastOK.mp3";
-    this.winningSong = document.createElement("audio");
+    this.winningSong = new Audio();
     this.winningSong.src = "./audios/Ambiance/AchaidhCheideOK.mp3";
+    //this.gameAmbiance.addEventListener('canplaythrough', () => this.gameAmbiance.play())
   }
   init() {
     this.canvas = document.getElementById("canvas");
@@ -158,7 +159,7 @@ class Game {
     const reloadButton = document.querySelector(".reload");
     const canvas = document.getElementById("canvas");
     const homepage = document.querySelector(".homepage");
-    const button = document.querySelectorAll("#buttons");
+    const button = document.querySelectorAll("#buttons button");
     const controls = document.querySelector("#controls");
     reloadButton.classList.toggle("hide");
     reloadButton.addEventListener(
@@ -172,7 +173,7 @@ class Game {
         homepage.classList.toggle("hide");
         controls.classList.toggle("hide");
         button.forEach((btn) => {
-          btn.classList.toggle("hide");
+          // btn.classList.toggle("hide");
         });
         reloadButton.classList.toggle("hide");
       },
