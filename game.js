@@ -30,7 +30,7 @@ class Game {
     this.losingMusic = document.createElement("audio");
     this.losingMusic.src = "./audios/Ambiance/HiddenPastOK.mp3";
     this.winningSong = document.createElement("audio");
-    this.winningSong.src = "./audios/Ambiance/AchaidhCheide.mp3";
+    this.winningSong.src = "./audios/Ambiance/AchaidhCheideOK.mp3";
   }
   init() {
     this.canvas = document.getElementById("canvas");
